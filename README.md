@@ -1,1 +1,1 @@
-# XPMSL
+# Xiaofeishu Python Minecraft Server Launcher
