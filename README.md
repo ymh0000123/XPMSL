@@ -11,6 +11,9 @@
 ## 计划
 - [x] 界面简洁
 - [x] 动态公告
+- [x] 下载文件（额外制作的下载模块）
 - [ ] 动态规则
-- [ ] 下载文件
 - [ ] 扩展模块
+## 研究时候的副产物
+
+[下载模块（XPMSL-Download-module）](https://github.com/ymh0000123/XPMSL-Download-module/)
