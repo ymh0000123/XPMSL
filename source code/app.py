@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 import subprocess
 import os
 import yaml
@@ -7,19 +8,68 @@ import threading
 import requests
 import time
 import webbrowser
+import http.client
+import json
+
+version= "V1.0.1"
+
+# 函数，用于执行更新检查操作
+def check_for_update_Auto():
+    latest_release_url = "/repos/ymh0000123/XPMSL/releases/latest"
+
+    try:
+        conn = http.client.HTTPSConnection("api.github.com")
+        conn.request("GET", latest_release_url)
+        response = conn.getresponse()
+
+        if response.status == 200:
+            data = response.read()
+            latest_release = json.loads(data)
+            latest_version = latest_release["tag_name"]
+            if latest_version != version:
+                messagebox.showinfo("更新提示", f"当前版本 {version} 不是最新版，请更新到版本 {latest_version}")
+
+        conn.close()
+    except Exception as e:
+        print("检查更新时出错:", str(e))
+
+def perform_update_check():
+    # 创建一个新线程来执行更新检查
+    update_thread = threading.Thread(target=check_for_update_Auto)
+    update_thread.start()
+
+perform_update_check()
+
+def check_latest_version():
+    latest_release_url = "/repos/ymh0000123/XPMSL/releases/latest"
+    
+    try:
+        conn = http.client.HTTPSConnection("api.github.com")
+        conn.request("GET", latest_release_url)
+        response = conn.getresponse()
+        
+        if response.status == 200:
+            data = response.read()
+            latest_release = json.loads(data)
+            latest_version = latest_release["tag_name"]
+            if latest_version != version:
+                messagebox.showinfo("更新提示", f"当前版本 {version} 不是最新版，请更新到版本 {latest_version}")
+        
+        conn.close()
+    except Exception as e:
+        print("检查更新时出错:", str(e))
 
 
-# 创建检测更新的函数
+# 最新版的函数
 def check_for_updates():
     update_url = "https://github.com/ymh0000123/XPMSL/releases"
     webbrowser.open(update_url)
-
 
 def open_about_window():
     about_window = tk.Toplevel(root)
     about_window.title("关于")
 
-    about_label = ttk.Label(about_window, text="Minecraft 服务器启动器 v1.0\n作者: 没用的小废鼠")
+    about_label = ttk.Label(about_window, text="Xiaofeishu Python Minecraft Server Launcher(XPMSL) "+version+"\n作者: 没用的小废鼠\n程序免费开源,但是要遵守 GPL-3.0 license")
     about_label.pack(padx=20, pady=20)
 
 
@@ -33,10 +83,11 @@ root.config(menu=menu_bar)
 # 创建“帮助”菜单
 help_menu = tk.Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label="帮助", menu=help_menu)
+
+menu_bar.add_cascade(label="关于", command=open_about_window)
 # 在“帮助”菜单中添加“检测更新”选项
-help_menu.add_command(label="检测更新", command=check_for_updates)
-# 在“帮助”菜单中添加“关于”选项
-help_menu.add_command(label="关于", command=open_about_window)
+help_menu.add_command(label="查看最新版", command=check_for_updates)
+help_menu.add_command(label="检查更新(Github API)", command=check_latest_version)
 
 # 创建标签框架
 frame = ttk.LabelFrame(root, text="服务器配置")
