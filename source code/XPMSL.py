@@ -9,8 +9,9 @@ import time
 import webbrowser
 import http.client
 import json
+from tkinter import simpledialog
 
-version= "V1.0.2"
+version= "V1.0.3"
 
 # 函数，用于执行更新检查操作
 def check_for_update_Auto():
@@ -58,6 +59,7 @@ def perform_update_check():
 
 perform_update_check()
 
+#下载模块
 # 函数，用于执行下载操作
 def download_file(status_label):
     global file_listbox  # 使用全局变量 file_listbox
@@ -154,6 +156,18 @@ def open_about_window():
     about_label = ttk.Label(about_window, text="Xiaofeishu Python Minecraft Server Launcher(XPMSL) "+version+"\n作者: 没用的小废鼠\n程序免费开源,但是要遵守 GPL-3.0 license")
     about_label.pack(padx=20, pady=20)
 
+def set_memory_settings():
+    max_memory = simpledialog.askinteger("设置内存", "请输入最大内存 (以MB为单位):", parent=root)
+    min_memory = simpledialog.askinteger("设置内存", "请输入最小内存 (以MB为单位):", parent=root)
+
+    if max_memory is not None and min_memory is not None:
+        # 更新配置文件中的内存设置
+        config["max_memory"] = max_memory
+        config["min_memory"] = min_memory
+
+        # 保存配置到config.yaml
+        with open("XPMSL\\config.yaml", "w") as config_file:
+            yaml.dump(config, config_file)
 
 root = tk.Tk()
 root.title("Minecraft 服务器启动器")
@@ -168,6 +182,7 @@ menu_bar.add_cascade(label="帮助", menu=help_menu)
 
 menu_bar.add_cascade(label="关于", command=open_about_window)
 
+menu_bar.add_cascade(label="设置内存", command=set_memory_settings)
 # 在菜单栏中添加一个选项来触发显示单独界面的函数
 menu_bar.add_cascade(label="打开下载模块", command=open_download_module_window)
 # 在“帮助”菜单中添加“检测更新”选项
@@ -264,11 +279,14 @@ def start_minecraft_server():
         selected_java_version = java_var.get()
         new_jar_file_name = jar_file_entry.get()
 
+        max_memory = config.get("max_memory", "2G")
+        min_memory = config.get("min_memory", "1G")
+
         # 进入Minecraft服务器目录
         os.chdir("XPMSL\\server")
 
         # 启动Minecraft服务器命令
-        cmd_command = f'"{java_executables[java_versions.index(selected_java_version)]}" -Xmx2G -Xms1G -jar {new_jar_file_name} nogui'
+        cmd_command = f'"{java_executables[java_versions.index(selected_java_version)]}" -Xmx{max_memory}m -Xms{min_memory}m -jar {new_jar_file_name} nogui'
 
         # 使用subprocess启动服务器进程，使用PIPE连接输入和输出
         global server_process
