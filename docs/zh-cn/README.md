@@ -5,3 +5,5 @@
 下载之后直接运行软件
 
 把jar文件放到XPMSL/sever 点击启动Minecraft服务器就可以使用了
+
+> 后面会考虑添加下载jar功能
