@@ -1,7 +1,7 @@
 # Xiaofeishu Python Minecraft Server Launcher
 
 开服器正在开发中，请各位耐心等待。
-部分代码使用chatdpt协助
+部分代码使用ChatGpt协助
 
 ## 进度
 2023/9/3 添加了检查更新，添加了下载模块
