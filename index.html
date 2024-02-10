@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>awa</title>
+  <link rel="shortcut icon" type="image/ico" href="https://xiaofeishu-picture.pages.dev/picture/ico.png">
+  <!-- 引入Bootstrap的CSS库 -->
+  <link href="https://unpkg.com/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 引入Bootstrap的JavaScript库 -->
+  <script src="https://unpkg.com/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <img src="https://xiaofeishu-picture.pages.dev/picture/ico.png" alt="Bootstrap" width="30" height="30">
+        <span class="fs-4">awa</span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="https://ymh0000123.github.io/dochub/" class="nav-link">综合文档</a></li>
+        <li class="nav-item"><a href="https://xiaofeishu-boke.netlify.app/" class="nav-link">博客</a></li>
+        <li class="nav-item"><a href="https://ymh0000123.pages.dev/" class="nav-link">About</a></li>
+      </ul>
+    </header>
+  </div>
+  <div class="container py-4">
+    <h1>正在准备跳转</h1>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title" id="ys"><span class="placeholder col-6"></span></h5>
+      </div>
+    </div>
+  </div>
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top sticky-bottom">
+    <div class="col-md-4 d-flex align-items-center">
+      <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+        <svg class="bi" width="30" height="24">
+          <use xlink:href="#bootstrap" />
+        </svg>
+      </a>
+      <span class="mb-3 mb-md-0 text-muted"><span id="year"></span></span>
+    </div>
+
+    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+
+    </ul>
+  </footer>
+  <script>
+    //原神好句api by没用的小废鼠
+    fetch('https://unpkg.com/genshin-good-words/Good-words.txt')
+      .then(response => response.text())
+      .then(data => {
+        const lines = data.split('\n');
+        const randomLine = lines[Math.floor(Math.random() * lines.length)];
+        document.getElementById('ys').innerText = randomLine;
+      })
+      .catch(error => {
+        console.error('Error fetching ys:', error);
+      });
+
+  </script>
+  <script>
+    layui.use(function () {
+      // code
+      layui.code({
+        elem: '.code-demo'
+      });
+    })
+  </script>
+  <script>
+    // 使用JavaScript获取当前年份
+    const currentYear = new Date().getFullYear();
+    // 将年份显示在页面上
+    document.getElementById('year').innerText = '2023—' + currentYear;
+  </script>
+  <script src="./js/xn.js"></script>
+  <script type="text/javascript">
+    // 获取当前域名
+    var currentDomain = window.location.hostname;
+
+    // 检测当前域名是否为 alist.linyun.v6.navy
+    setTimeout(function () { window.location.href = "https://alist.linyun.v6.navy"; }, 5000); // 5秒钟
+
+  </script>
+</body>
+
+</html>
