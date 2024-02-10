@@ -1,5 +1,5 @@
 module.exports = {
-    base:'/',
+    base:'/XPMSL/',
     title: 'XPMSL',
     description: 'Just playing around',
     description: "description",
