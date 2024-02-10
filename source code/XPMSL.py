@@ -11,7 +11,9 @@ import http.client
 import json
 from tkinter import simpledialog
 
-version= "V1.0.3"
+version = "V1.0.3"
+Build = "20240210"
+url_git="ymh0000123/XPMSL/announcement/"
 
 # 函数，用于执行更新检查操作
 def check_for_update_Auto():
@@ -27,39 +29,53 @@ def check_for_update_Auto():
             latest_release = json.loads(data)
             latest_version = latest_release["tag_name"]
             if latest_version != version:
-                messagebox.showinfo("更新提示", f"当前版本 {version} 不是最新版，请更新到版本 {latest_version}")
+                messagebox.showinfo(
+                    "更新提示", f"当前版本 {version} 不是最新版，请更新到版本 {latest_version}"
+                )
 
         conn.close()
     except Exception as e:
         print("检查更新时出错:", str(e))
+        messagebox.showinfo(
+                    "错误", f"检查更新时出错,请检查网络", str(e)
+                )
+
 
 def check_latest_version():
     latest_release_url = "/repos/ymh0000123/XPMSL/releases/latest"
-    
+
     try:
         conn = http.client.HTTPSConnection("api.github.com")
         conn.request("GET", latest_release_url)
         response = conn.getresponse()
-        
+
         if response.status == 200:
             data = response.read()
             latest_release = json.loads(data)
             latest_version = latest_release["tag_name"]
             if latest_version != version:
-                messagebox.showinfo("更新提示", f"当前版本 {version} 不是最新版，请更新到版本 {latest_version}")
-        
+                messagebox.showinfo(
+                    "更新提示", f"当前版本 {version} 不是最新版，请更新到版本 {latest_version}"
+                )
+
         conn.close()
     except Exception as e:
         print("检查更新时出错:", str(e))
+        messagebox.showinfo(
+                    "错误", f"检查更新时出错,请检查网络", str(e)
+                )
+
 
 def perform_update_check():
     # 创建一个新线程来执行更新检查
     update_thread = threading.Thread(target=check_for_update_Auto)
     update_thread.start()
 
+
 perform_update_check()
 
-#下载模块
+
+# 下载模块
 # 函数，用于执行下载操作
 def download_file(status_label):
     global file_listbox  # 使用全局变量 file_listbox
@@ -91,6 +107,7 @@ def download_file(status_label):
     except Exception as e:
         status_label.config(text=f"下载发生错误: {str(e)}")
 
+
 # 函数，用于解析文件列表
 def parse_file_list(file_content):
     global file_info_dict  # 使用全局变量 file_info_dict
@@ -104,6 +121,7 @@ def parse_file_list(file_content):
                 file_url = parts[1].strip(")").strip()
                 file_info_dict[file_name] = file_url
     return file_info_dict
+
 
 def open_download_module_window():
     global file_listbox  # 使用全局变量 file_listbox
@@ -129,7 +147,7 @@ def open_download_module_window():
     status_label.pack()
 
     # 获取文件列表内容
-    url = "https://github.moeyy.xyz/https://raw.githubusercontent.com/ymh0000123/XPMSL/main/announcement/list.txt"
+    url = "https://cdn.jsdelivr.net/gh/"+url_git+"list.txt"
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -141,20 +159,28 @@ def open_download_module_window():
     else:
         messagebox.showerror("错误", f"无法获取文件列表，HTTP状态码: {response.status_code}")
         # 创建下载按钮，并传递status_label作为参数
-    download_button = tk.Button(download_window, text="下载文件", command=lambda: download_file(status_label))
+    download_button = tk.Button(
+        download_window, text="下载文件", command=lambda: download_file(status_label)
+    )
     download_button.pack()
+
 
 # 最新版的函数
 def check_for_updates():
     update_url = "https://github.com/ymh0000123/XPMSL/releases"
     webbrowser.open(update_url)
 
+
 def open_about_window():
     about_window = tk.Toplevel(root)
     about_window.title("关于")
 
-    about_label = ttk.Label(about_window, text="Xiaofeishu Python Minecraft Server Launcher(XPMSL) "+version+"\n作者: 没用的小废鼠\n程序免费开源,但是要遵守 GPL-3.0 license")
+    about_label = ttk.Label(
+        about_window,
+        text="Xiaofeishu Python Minecraft Server Launcher(XPMSL) "+ version+ "\n作者: 没用的小废鼠\n\n程序免费开源,但是要遵守 GPL-3.0 license"+"\n内部版本: "+Build+"\n\n因为没有服务器公告下载和更新功能依赖GitHub，moeyy，jsdelivr",
+    )
     about_label.pack(padx=20, pady=20)
+
 
 def set_memory_settings():
     max_memory = simpledialog.askinteger("设置内存", "请输入最大内存 (以MB为单位):", parent=root)
@@ -168,6 +194,7 @@ def set_memory_settings():
         # 保存配置到config.yaml
         with open("XPMSL\\config.yaml", "w") as config_file:
             yaml.dump(config, config_file)
+
 
 root = tk.Tk()
 root.title("Minecraft 服务器启动器")
@@ -219,6 +246,7 @@ button_frame.grid(row=2, column=0, columnspan=2, padx=10, pady=10, sticky="nsew"
 command_frame = ttk.Frame(frame)
 command_frame.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
 
+
 # 获取Java版本
 def get_java_version(java_executable):
     try:
@@ -238,6 +266,7 @@ def get_java_version(java_executable):
 def find_java_executables():
     java_executables = []
     program_files_path = os.path.join("C:\\", "Program Files", "Java")
+    program_files_path_1 = os.path.join("C:\\", "Program Files", "Zulu")
 
     if os.path.exists(program_files_path):
         for root, dirs, files in os.walk(program_files_path):
@@ -246,6 +275,14 @@ def find_java_executables():
                     jdk_path = os.path.join(root, dir, "bin", "java.exe")
                     if os.path.exists(jdk_path):
                         java_executables.append(jdk_path)
+    
+    if os.path.exists(program_files_path_1):
+        for root, dirs, files in os.walk(program_files_path_1):
+            for dir in dirs:
+                if dir.lower().startswith("zulu"):
+                    zulu_path = os.path.join(root, dir, "bin", "java.exe")
+                    if os.path.exists(zulu_path):
+                        java_executables.append(zulu_path)
 
     return java_executables
 
@@ -312,7 +349,7 @@ def start_minecraft_server():
             output_text.insert(tk.END, line)
             output_text.see(tk.END)  # 滚动到最新输出
             root.update_idletasks()  # 更新界面以响应用户操作
-        output_text.insert(tk.END, f"标准错误:\n")
+        output_text.insert(tk.END, f"服务器已关闭:\n")
         while True:
             line = server_process.stderr.readline()
             if not line:
@@ -327,7 +364,9 @@ def start_minecraft_server():
     server_thread.start()
 
 
-start_button = ttk.Button(button_frame, text="启动Minecraft服务器", command=start_minecraft_server)
+start_button = ttk.Button(
+    button_frame, text="启动Minecraft服务器", command=start_minecraft_server
+)
 start_button.grid(row=0, column=0, padx=10, pady=10)
 
 
@@ -339,7 +378,9 @@ def stop_minecraft_server():
         server_process.stdin.flush()
 
 
-stop_button = ttk.Button(button_frame, text="关闭Minecraft服务器", command=stop_minecraft_server)
+stop_button = ttk.Button(
+    button_frame, text="关闭Minecraft服务器", command=stop_minecraft_server
+)
 stop_button.grid(row=0, column=1, padx=10, pady=10)
 
 # 创建文本框用于输入命令
@@ -397,7 +438,7 @@ announcement_textbox.config(state="disabled")
 # 获取公告文本
 def fetch_announcement():
     try:
-        url = "https://github.moeyy.xyz/https://raw.githubusercontent.com/ymh0000123/XPMSL/main/announcement/announcement.txt"
+        url = "https://cdn.jsdelivr.net/gh/"+url_git+"announcement.txt"
         response = requests.get(url)
         if response.status_code == 200:
             announcement_text = response.text
