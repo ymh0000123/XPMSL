@@ -1,0 +1,19 @@
+name: XPMSL
+
+on:
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+jobs:
+    pyinstaller-build:
+    runs-on: windows-latest
+    steps:
+        - name: Create Executable
+        uses: sayyid5416/pyinstaller@v1
+        with:
+            python_ver: '3.12'
+            spec: '/source code/XPMSL.py'
+            upload_exe_with_name: 'XPMSL'
+            options: --onefile, --windowed, 
