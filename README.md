@@ -8,11 +8,10 @@
 2. [Github Actions](https://github.com/ymh0000123/XPMSL/actions/workflows/python-build-win.yml)
 
 ## 进度
+2024/02/10 支持Zulu的java
 2023/09/3 添加了检查更新，添加了下载模块  
 2023/09/2 更新了动态公告  
 2023/09/1 大概的样子有了  
-2024/02/10 支持Zulu的java
-
 
 ## 计划
 - [x] 界面简洁
