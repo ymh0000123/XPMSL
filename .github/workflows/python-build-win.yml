@@ -16,11 +16,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r source\ code/requirements.txt
+        pip install -r "source code/requirements.txt
 
     - name: Build Python file
       run: |
-        pyinstaller --onefile source\ code/XPMSL.py
+          cd source\ code  # 切换到包含XPMSL.py的文件夹
+          pyinstaller --onefile XPMSL.py
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
