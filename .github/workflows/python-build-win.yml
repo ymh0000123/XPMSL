@@ -26,4 +26,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: compiled-app
-        path: source code\dist\*.exe
+        path: source "code dist\*.exe"
