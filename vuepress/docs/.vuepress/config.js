@@ -1,4 +1,4 @@
-import { defaultTheme } from 'vuepress'
+const { defaultTheme } = require('@vuepress/theme-default')
 export default {
     base: '/',
     title: 'XPMSL',
