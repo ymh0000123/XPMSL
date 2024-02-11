@@ -1,6 +1,7 @@
 import { defaultTheme } from '@vuepress/theme-default'
 import { defineUserConfig } from 'vuepress/cli'
-import viteBundler from "./vi.js";
+import { viteBundler } from '@vuepress/bundler-vite'
+
 
 export default {
     base: '/',
@@ -49,5 +50,8 @@ export default {
             },
         ]
     }),
-    bundler: '@vuepress/bundler-webpack',
+    bundler: viteBundler({
+        viteOptions: {},
+        vuePluginOptions: {},
+    }),
 }
