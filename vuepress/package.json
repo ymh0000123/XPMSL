@@ -11,5 +11,8 @@
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
+  },
+  "dependencies": {
+    "vuepress-plugin-giscus": "^2.0.0-alpha.26"
   }
 }
