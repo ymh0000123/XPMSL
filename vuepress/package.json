@@ -5,7 +5,7 @@
   "author": "没用的小废鼠 <107793048+ymh0000123@users.noreply.github.com>",
   "license": "MIT",
   "devDependencies": {
-    "@vuepress/plugin-active-header-links": "^1.9.10",
+    "@vuepress/plugin-active-header-links": "^2.0.0-rc.14",
     "vuepress": "^2.0.0-rc.7"
   },
   "scripts": {
@@ -13,6 +13,6 @@
     "docs:build": "vuepress build docs"
   },
   "dependencies": {
-    "vuepress-plugin-giscus": "^2.0.0-alpha.26"
+    "vuepress-plugin-giscus": "^2.0.0"
   }
 }
