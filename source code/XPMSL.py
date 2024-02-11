@@ -11,68 +11,35 @@ import http.client
 import json
 from tkinter import simpledialog
 
-version = "V1.0.3"
-Build = "20240210"
+version = "V1.0.5"
+Build = "20240211"
 url_git="ymh0000123/XPMSL/announcement/"
+current_build = Build
 
-# 函数，用于执行更新检查操作
-def check_for_update_Auto():
-    latest_release_url = "/repos/ymh0000123/XPMSL/releases/latest"
 
+def check_for_updates(current_build):
     try:
-        conn = http.client.HTTPSConnection("api.github.com")
-        conn.request("GET", latest_release_url)
-        response = conn.getresponse()
-
-        if response.status == 200:
-            data = response.read()
-            latest_release = json.loads(data)
-            latest_version = latest_release["tag_name"]
-            if latest_version != version:
-                messagebox.showinfo(
-                    "更新提示", f"当前版本 {version} 不是最新版，请更新到版本 {latest_version}"
-                )
-
-        conn.close()
+        # 请求远程JSON数据
+        url = "https://xpmsl.pages.dev/releases.json"
+        response = requests.get(url)
+        data = response.json()
+        
+        # 获取远程build值并转换为整数
+        remote_build = data['build']
+        
+        # 比较build值
+        if remote_build > current_build:
+            messagebox.showinfo("更新提醒", "有新的程序版本可用，请更新！")
     except Exception as e:
-        print("检查更新时出错:", str(e))
-        messagebox.showinfo(
-                    "错误", f"检查更新时出错,请检查网络", str(e)
-                )
+        messagebox.showerror("更新检查失败", f"无法检查更新：{e}")
 
-
-def check_latest_version():
-    latest_release_url = "/repos/ymh0000123/XPMSL/releases/latest"
-
-    try:
-        conn = http.client.HTTPSConnection("api.github.com")
-        conn.request("GET", latest_release_url)
-        response = conn.getresponse()
-
-        if response.status == 200:
-            data = response.read()
-            latest_release = json.loads(data)
-            latest_version = latest_release["tag_name"]
-            if latest_version != version:
-                messagebox.showinfo(
-                    "更新提示", f"当前版本 {version} 不是最新版，请更新到版本 {latest_version}"
-                )
-
-        conn.close()
-    except Exception as e:
-        print("检查更新时出错:", str(e))
-        messagebox.showinfo(
-                    "错误", f"检查更新时出错,请检查网络", str(e)
-                )
-
-
-def perform_update_check():
-    # 创建一个新线程来执行更新检查
-    update_thread = threading.Thread(target=check_for_update_Auto)
+def check_updates_in_thread(current_build):
+    update_thread = threading.Thread(target=check_for_updates, args=(current_build,))
     update_thread.start()
 
 
-perform_update_check()
+# 在程序启动时自动检查更新（在单独的线程中）
+check_updates_in_thread(current_build)
 
 
 # 下载模块
@@ -204,17 +171,13 @@ menu_bar = tk.Menu(root)
 root.config(menu=menu_bar)
 
 # 创建“帮助”菜单
-help_menu = tk.Menu(menu_bar, tearoff=0)
-menu_bar.add_cascade(label="帮助", menu=help_menu)
-
 menu_bar.add_cascade(label="关于", command=open_about_window)
 
 menu_bar.add_cascade(label="设置内存", command=set_memory_settings)
 # 在菜单栏中添加一个选项来触发显示单独界面的函数
 menu_bar.add_cascade(label="打开下载模块", command=open_download_module_window)
-# 在“帮助”菜单中添加“检测更新”选项
-help_menu.add_command(label="查看最新版", command=check_for_updates)
-help_menu.add_command(label="检查更新(Github API)", command=check_latest_version)
+menu_bar.add_command(label="查看Github最新版", command=check_for_updates)
+
 
 # 创建标签框架
 frame = ttk.LabelFrame(root, text="服务器配置")
@@ -265,24 +228,21 @@ def get_java_version(java_executable):
 # 搜索Java可执行文件并获取版本信息
 def find_java_executables():
     java_executables = []
-    program_files_path = os.path.join("C:\\", "Program Files", "Java")
-    program_files_path_1 = os.path.join("C:\\", "Program Files", "Zulu")
+    # 包括Oracle JDK和Zulu JDK的路径
+    java_paths = [
+        os.path.join("C:\\", "Program Files", "Java"),
+        os.path.join("C:\\", "Program Files", "Zulu")
+    ]
 
-    if os.path.exists(program_files_path):
-        for root, dirs, files in os.walk(program_files_path):
-            for dir in dirs:
-                if dir.lower().startswith("jdk"):
-                    jdk_path = os.path.join(root, dir, "bin", "java.exe")
-                    if os.path.exists(jdk_path):
-                        java_executables.append(jdk_path)
-    
-    if os.path.exists(program_files_path_1):
-        for root, dirs, files in os.walk(program_files_path_1):
-            for dir in dirs:
-                if dir.lower().startswith("zulu"):
-                    zulu_path = os.path.join(root, dir, "bin", "java.exe")
-                    if os.path.exists(zulu_path):
-                        java_executables.append(zulu_path)
+    for program_files_path in java_paths:
+        if os.path.exists(program_files_path):
+            for root, dirs, files in os.walk(program_files_path):
+                for dir in dirs:
+                    # 对于Zulu和Oracle JDK的检查无需变更
+                    if dir.lower().startswith(("jdk", "zulu")):
+                        jdk_path = os.path.join(root, dir, "bin", "java.exe")
+                        if os.path.exists(jdk_path):
+                            java_executables.append(jdk_path)
 
     return java_executables
 
