@@ -1,3 +1,2 @@
-npm install -g vuepress
-npm install
-npm run build
+yarn instal
+yarn docs:build
