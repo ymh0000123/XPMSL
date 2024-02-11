@@ -13,6 +13,7 @@
     "docs:build": "vuepress build docs"
   },
   "dependencies": {
+    "@vuepress/theme-default": "^2.0.0-rc.11",
     "vuepress-plugin-giscus": "^2.0.0-alpha.26"
   }
 }
