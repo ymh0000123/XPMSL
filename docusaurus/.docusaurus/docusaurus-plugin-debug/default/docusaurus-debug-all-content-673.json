@@ -1,0 +1,114 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "loadedVersions": [
+        {
+          "versionName": "current",
+          "label": "Next",
+          "banner": null,
+          "badge": false,
+          "noIndex": false,
+          "className": "docs-version-current",
+          "path": "/XPMSL/docs",
+          "tagsPath": "/XPMSL/docs/tags",
+          "editUrl": "https://github.com/ymh0000123/XPMSL/tree/main/docs/docs",
+          "editUrlLocalized": "https://github.com/ymh0000123/XPMSL/tree/main/docs/i18n/cn/docusaurus-plugin-content-docs/current",
+          "isLast": true,
+          "routePriority": -1,
+          "sidebarFilePath": "F:\\docusaurus\\1\\xpmsl\\sidebars.js",
+          "contentPath": "F:\\docusaurus\\1\\xpmsl\\docs",
+          "contentPathLocalized": "F:\\docusaurus\\1\\xpmsl\\i18n\\cn\\docusaurus-plugin-content-docs\\current",
+          "docs": [
+            {
+              "id": "historicalversion",
+              "title": "历史版本",
+              "description": "加速下载（推荐）",
+              "source": "@site/docs/historicalversion.md",
+              "sourceDirName": ".",
+              "slug": "/historicalversion",
+              "permalink": "/XPMSL/docs/historicalversion",
+              "draft": false,
+              "unlisted": false,
+              "editUrl": "https://github.com/ymh0000123/XPMSL/tree/main/docs/docs/historicalversion.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "快速开始",
+                "permalink": "/XPMSL/docs/"
+              }
+            },
+            {
+              "id": "README",
+              "title": "快速开始",
+              "description": "到GitHub releases下载",
+              "source": "@site/docs/README.md",
+              "sourceDirName": ".",
+              "slug": "/",
+              "permalink": "/XPMSL/docs/",
+              "draft": false,
+              "unlisted": false,
+              "editUrl": "https://github.com/ymh0000123/XPMSL/tree/main/docs/docs/README.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "next": {
+                "title": "历史版本",
+                "permalink": "/XPMSL/docs/historicalversion"
+              }
+            }
+          ],
+          "drafts": [],
+          "sidebars": {
+            "tutorialSidebar": [
+              {
+                "type": "doc",
+                "id": "README"
+              },
+              {
+                "type": "doc",
+                "id": "historicalversion"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "docusaurus-plugin-content-blog": {
+    "default": {
+      "blogSidebarTitle": "Recent posts",
+      "blogPosts": [],
+      "blogListPaginated": [],
+      "blogTags": {},
+      "blogTagsListPath": "/XPMSL/blog/tags",
+      "blogTagsPaginated": []
+    }
+  },
+  "docusaurus-plugin-content-pages": {
+    "default": [
+      {
+        "type": "jsx",
+        "permalink": "/XPMSL/",
+        "source": "@site/src/pages/index.js"
+      },
+      {
+        "type": "mdx",
+        "permalink": "/XPMSL/markdown-page",
+        "source": "@site/src/pages/markdown-page.md",
+        "title": "Markdown page example",
+        "description": "You don't need React to write simple standalone pages.",
+        "frontMatter": {
+          "title": "Markdown page example"
+        },
+        "unlisted": false
+      }
+    ]
+  },
+  "docusaurus-plugin-debug": {},
+  "docusaurus-theme-classic": {},
+  "docusaurus-bootstrap-plugin": {},
+  "docusaurus-mdx-fallback-plugin": {}
+}

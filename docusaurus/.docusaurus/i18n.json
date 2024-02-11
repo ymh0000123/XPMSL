@@ -1,0 +1,17 @@
+{
+  "defaultLocale": "cn",
+  "locales": [
+    "cn"
+  ],
+  "path": "i18n",
+  "currentLocale": "cn",
+  "localeConfigs": {
+    "cn": {
+      "label": "Cn",
+      "direction": "ltr",
+      "htmlLang": "cn",
+      "calendar": "gregory",
+      "path": "cn"
+    }
+  }
+}
