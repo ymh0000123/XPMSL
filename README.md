@@ -3,6 +3,10 @@
 开服器正在开发中，请各位耐心等待。
 部分代码使用ChatGpt协助。
 
+## 下载
+1. [Github Releases](https://github.com/ymh0000123/XPMSL/releases)  
+2. [Github Actions](https://github.com/ymh0000123/XPMSL/actions/workflows/python-build-win.yml)
+
 ## 进度
 2023/09/3 添加了检查更新，添加了下载模块  
 2023/09/2 更新了动态公告  
