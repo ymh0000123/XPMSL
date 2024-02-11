@@ -26,10 +26,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: compiled-app
-        path: source "dist\XPMSL.exe"
-    - name: Download Artifacts
-      uses: actions/download-artifact@v2
-      with:
-          name: compiled-app
-          path: downloaded-files
-      
+        path: "dist/XPMSL.exe"
