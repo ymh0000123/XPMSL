@@ -49,4 +49,5 @@ export default {
             },
         ]
     }),
+    bundler: '@vuepress/bundler-webpack',
 }
