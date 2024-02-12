@@ -12,7 +12,6 @@
   },
   "devDependencies": {
     "@vuepress/bundler-vite": "2.0.0-rc.7",
-    "@vuepress/plugin-feed": "2.0.0-rc.14",
     "vue": "^3.4.15",
     "vuepress": "2.0.0-rc.7",
     "vuepress-theme-hope": "2.0.0-rc.23"
