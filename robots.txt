@@ -1,0 +1,5 @@
+
+User-agent:*
+Disallow:
+
+Sitemap: https://xpmsl.pages.dev/sitemap.xml
