@@ -9,7 +9,7 @@ bgImage: https://xiaofeishu-picture.pages.dev/picture/bj.png
 bgImageStyle:
   background-attachment: fixed
 actions:
-  - text: 快速上手
+  - text: 快速上手⌚
     link: /zh-cn/
     type: primary
 features:
