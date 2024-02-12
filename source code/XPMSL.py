@@ -11,16 +11,19 @@ import http.client
 import json
 from tkinter import simpledialog
 
-version = "V1.0.5"
-Build = "20240211"
-url_git="ymh0000123/XPMSL/announcement/"
+version = "V1.1.0"
+Build = "20240212"
 current_build = Build
+api_url = "https://xpmsl.pages.dev/"
+api_releases = "releases.json"
+api_download_button = "announcement/list.txt"
+api_announcement = "announcement/announcement.txt"
 
 
 def check_for_updates(current_build):
     try:
         # 请求远程JSON数据
-        url = "https://xpmsl.pages.dev/releases.json"
+        url = api_url + api_releases
         response = requests.get(url)
         data = response.json()
         
@@ -114,7 +117,7 @@ def open_download_module_window():
     status_label.pack()
 
     # 获取文件列表内容
-    url = "https://cdn.jsdelivr.net/gh/"+url_git+"list.txt"
+    url = api_url + api_download_button
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -144,7 +147,7 @@ def open_about_window():
 
     about_label = ttk.Label(
         about_window,
-        text="Xiaofeishu Python Minecraft Server Launcher(XPMSL) "+ version+ "\n作者: 没用的小废鼠\n\n程序免费开源,但是要遵守 GPL-3.0 license"+"\n内部版本: "+Build+"\n\n因为没有服务器公告下载和更新功能依赖GitHub，moeyy，jsdelivr",
+        text="Xiaofeishu Python Minecraft Server Launcher(XPMSL) "+ version+ "\n作者: 没用的小废鼠\n\n程序免费开源,但是要遵守 GPL-3.0 license"+"\n内部版本: "+Build+"\n\n因为没有服务器API功能依赖 Cloudflare",
     )
     about_label.pack(padx=20, pady=20)
 
@@ -398,7 +401,7 @@ announcement_textbox.config(state="disabled")
 # 获取公告文本
 def fetch_announcement():
     try:
-        url = "https://cdn.jsdelivr.net/gh/"+url_git+"announcement.txt"
+        url = api_url + api_announcement
         response = requests.get(url)
         if response.status_code == 200:
             announcement_text = response.text
