@@ -1,8 +1,13 @@
 ---
 home: true
+icon: home
+title: HOME
 heroImage: /ico.png
 heroText: XPMSL
 tagline: XPMSL官方文档
+bgImage: https://xiaofeishu-picture.pages.dev/picture/bj.png
+bgImageStyle:
+  background-attachment: fixed
 actions:
   - text: 快速上手
     link: /zh-cn/

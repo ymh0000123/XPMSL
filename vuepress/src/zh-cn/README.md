@@ -1,5 +1,5 @@
 # 快速开始
-到GitHub releases下载
+到GitHub releases下载  
 [XPMSL](https://github.com/ymh0000123/XPMSL/releases)  
 [Github Actions](https://github.com/ymh0000123/XPMSL/actions/workflows/python-build-win.yml)  
 [历史版本](./historicalversion)  
