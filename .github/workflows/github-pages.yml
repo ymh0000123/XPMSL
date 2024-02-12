@@ -1,0 +1,33 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - main  # 根据需要更改为你的默认分支名
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20' # 根据需要更改Node版本
+
+    - name: Install PNPM
+      run: npm install -g pnpm
+
+    - name: Install dependencies
+      run: pnpm install
+      working-directory: ./vuepress  # 指定工作目录为docs文件夹
+
+    - name: Build
+      run: pnpm docs:build
+      working-directory: ./vuepress  # 再次指定工作目录
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./vuepress/src/.vuepress/dist # 确保路径反映了你的实际构建输出目录
