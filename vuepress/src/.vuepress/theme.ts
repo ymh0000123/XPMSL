@@ -28,7 +28,7 @@ export default hopeTheme({
   // sidebar
   sidebar,
 
-  footer: "GPL-3.0 license | XPMSL免费开源 | Docs Powered by VuePress",
+  footer: "<p>GPL-3.0 license | XPMSL免费开源 | Docs Powered by VuePress</p><p>文档由没用的小废鼠编写</p><p id='ys'></p>",
 
   displayFooter: true,
 
@@ -53,6 +53,15 @@ export default hopeTheme({
         "VPCard",
         "XiGua",
       ],
+      rootComponents: {
+        notice: [
+          {
+            path: "/",
+            title: "欢迎来到XPSML官方文档",
+            content: '<p>Hi</p><p>我们有新的镜像站</p><a href="https://xpmsl.pages.dev/">访问</a>'
+          },
+        ],
+      },
     },
 
     // You should generate and use your own comment service

@@ -17,5 +17,10 @@ export default sidebar({
       link: "zh-cn/historicalversion",
     },
     "Contact",
+    {
+      text: "镜像站" ,
+      icon: "fa-solid fa-rotate",
+      link: "https://ymh-dochub.pages.dev/"
+    }
   ],
 });
