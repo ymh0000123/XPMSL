@@ -10,15 +10,64 @@ import webbrowser
 import http.client
 import json
 from tkinter import simpledialog
+import argparse
+import sys
+import subprocess
 
-version = "V1.1.0"
-Build = "20240212"
+version = "V1.1.1"
+Build = "20240219"
 current_build = Build
 api_url = "https://xpmsl.pages.dev/"
 api_releases = "releases.json"
 api_download_button = "announcement/list.txt"
 api_announcement = "announcement/announcement.txt"
+Update_module = 'XPMSL-Update-module.exe'
+github_url = "https://slink.ltd/https://github.com/"
+Update_module_github = "ymh0000123/XPMSL-Update-module"
 
+def update_or_create_releases_json(build_value, directory_path="XPMSL"):
+    # 构造releases.json文件的路径
+    releases_json_path = os.path.join(directory_path, "releases.json")
+
+    # 确保directory_path目录存在
+    os.makedirs(directory_path, exist_ok=True)
+
+    # 检查文件是否存在
+    if not os.path.exists(releases_json_path):
+        print(f"文件{releases_json_path}不存在，将创建一个新的文件。")
+        # 创建带有Build值的初始字典
+        data = {"Build": build_value}
+    else:
+        # 如果文件存在，读取现有的JSON数据
+        with open(releases_json_path, 'r', encoding='utf-8') as file:
+            try:
+                data = json.load(file)
+            except json.JSONDecodeError:
+                # 如果文件存在但是为空或格式不正确，创建一个新的字典
+                print(f"文件{releases_json_path}格式不正确，将创建一个新的文件。")
+                data = {}
+
+        # 修改数据
+        data["Build"] = build_value
+
+    # 写回文件
+    with open(releases_json_path, 'w', encoding='utf-8') as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
+
+    print(f"已成功将Build更新为{build_value}在{releases_json_path}")
+
+def update_tool():
+    # 获取当前脚本的目录路径
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # 构造XPMSL-Update-module.exe的完整路径
+    exe_path = os.path.join(current_dir, "XPMSL-Update-module.exe")
+
+    # 使用subprocess模块启动程序
+    subprocess.run([exe_path])
+
+# 示例调用函数
+update_or_create_releases_json(Build)
 
 def check_for_updates(current_build):
     try:
@@ -29,16 +78,63 @@ def check_for_updates(current_build):
         
         # 获取远程build值并转换为整数
         remote_build = data['build']
-        
+        up_releases = data['up_releases']
+        Update_download(up_releases)
         # 比较build值
         if remote_build > current_build:
-            messagebox.showinfo("更新提醒", "有新的程序版本可用，请更新！")
+            if messagebox.askyesno("更新提醒", "有新的程序版本可用，请更新！"):
+                try:
+                    update_tool()
+                except:
+                    messagebox.showerror("更新失败", "无法更新程序。")
+
+        else:
+            messagebox.showinfo("提示", "注意！你正在使用的可能是测试版。")
     except Exception as e:
         messagebox.showerror("更新检查失败", f"无法检查更新：{e}")
 
 def check_updates_in_thread(current_build):
     update_thread = threading.Thread(target=check_for_updates, args=(current_build,))
     update_thread.start()
+
+
+
+def open_announcement():
+    # 创建解析器
+    parser = argparse.ArgumentParser(description='处理命令行参数的示例。')
+    
+    # 添加 '-v' 或 '--verbose' 选项
+    parser.add_argument('-b', '--Build', action='store_true', help='查看版本号')
+    
+    # 解析命令行参数
+    args = parser.parse_args()
+
+    # 根据 '-v' 或 '--verbose' 选项是否存在来决定程序行为
+    if args.Build:
+        print('Build')
+        # 执行一些操作后，退出程序
+        sys.exit()
+
+open_announcement()
+
+
+def Update_download(up_releases):
+    filename = Update_module
+    if not os.path.exists(filename):
+        download_file_Update(up_releases)
+
+def download_file_Update(up_releases):
+    url = github_url + Update_module_github +"/releases/download/V"+ up_releases +"/"+ Update_module
+    print (url)
+    filename = Update_module
+    try:
+        response = requests.get(url)
+        with open(filename, 'wb') as f:
+            f.write(response.content)
+        print("文件下载成功！")
+    except Exception as e:
+        print(f"文件下载失败：{e}")
+
 
 
 # 在程序启动时自动检查更新（在单独的线程中）
