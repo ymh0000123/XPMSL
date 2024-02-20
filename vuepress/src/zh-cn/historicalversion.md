@@ -1,5 +1,10 @@
 # 历史版本
 
+## 20240220  
+ 1. 添加启动模块  
+[Github](https://github.com/ymh0000123/XPMSL/releases/download/V1.1.2/XPMSL.exe) | 
+[加速下载](https://slink.ltd/https://github.com/ymh0000123/XPMSL/releases/download/V1.1.2/XPMSL.exe)  
+
 ## 20240219  
  1. 添加自动下载更新模块  
 [Github](https://github.com/ymh0000123/XPMSL/releases/download/V1.1.1/XPMSL.exe) | 
