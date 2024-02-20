@@ -10,11 +10,21 @@ export default sidebar({
       link: "zh-cn/",
       collapsible: true,
     },
-
+    {
+      text: "模块列表",
+      icon: "fa-solid fa-box",
+      link: "zh-cn/files",
+      collapsible: true,
+    },
     {
       text: "历史版本",
       icon: "book",
       link: "zh-cn/historicalversion",
+    },
+    {
+      text: "API",
+      icon: "book",
+      link: "zh-cn/apis",
     },
     "Contact",
     {

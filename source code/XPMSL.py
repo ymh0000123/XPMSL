@@ -9,13 +9,13 @@ import time
 import webbrowser
 import http.client
 import json
-from tkinter import simpledialog
+from tkinter import simpledialog, Toplevel, Scrollbar, EXTENDED, Listbox
 import argparse
 import sys
 import subprocess
 
-version = "V1.1.1"
-Build = "20240219"
+version = "V1.1.2"
+Build = "20240220"
 current_build = Build
 api_url = "https://xpmsl.pages.dev/"
 api_releases = "releases.json"
@@ -80,6 +80,7 @@ def check_for_updates(current_build):
         remote_build = data['build']
         up_releases = data['up_releases']
         Update_download(up_releases)
+        global about_build
         # 比较build值
         if remote_build > current_build:
             if messagebox.askyesno("更新提醒", "有新的程序版本可用，请更新！"):
@@ -87,9 +88,15 @@ def check_for_updates(current_build):
                     update_tool()
                 except:
                     messagebox.showerror("更新失败", "无法更新程序。")
-
+            else:
+                about_build = "\n有新版本"
         else:
-            messagebox.showinfo("提示", "注意！你正在使用的可能是测试版。")
+            if remote_build == current_build:
+                print("最新版")
+                about_build = "\n最新版"
+            else:
+                messagebox.showinfo("提示", "注意！你正在使用的可能是测试版。")
+                about_build = "\n测试版"
     except Exception as e:
         messagebox.showerror("更新检查失败", f"无法检查更新：{e}")
 
@@ -139,6 +146,87 @@ def download_file_Update(up_releases):
 
 # 在程序启动时自动检查更新（在单独的线程中）
 check_updates_in_thread(current_build)
+
+
+
+# 解析文件列表的函数
+def parse_file_list(file_content):
+    file_info_dict = {}
+    lines = file_content.split("\n")
+    for line in lines:
+        if line.strip():
+            parts = line.split("](")
+            if len(parts) == 2:
+                file_name = parts[0].strip("[").strip()
+                file_url = parts[1].strip(")").strip()
+                file_info_dict[file_name] = file_url
+    return file_info_dict
+
+# 获取远程文件列表并解析
+def get_and_parse_file_list(url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        file_content = response.text
+        return parse_file_list(file_content)
+    else:
+        print("Failed to retrieve the file list.")
+        return {}
+
+# 检查本地文件是否存在于远程列表中
+def check_local_files_against_remote(remote_file_info, local_dir):
+    local_files = os.listdir(local_dir)
+    matched_files = [file for file in local_files if file in remote_file_info]
+    return matched_files
+
+# 执行某个文件
+def launch_file(file_path):
+    try:
+        if os.name == 'nt':  # Windows
+            os.startfile(file_path)
+        elif os.name == 'posix':  # macOS, Linux
+            subprocess.call(('open', file_path))
+    except Exception as e:
+        print(f"Error opening file {file_path}: {e}")
+
+# 创建并更新列表窗口
+def update_list_window(matched_files, local_dir):
+    list_window = Toplevel(root)
+    list_window.title("已有模块")
+    list_window.geometry("400x300")  # 调整窗口大小
+
+    # 创建滚动条
+    scrollbar = Scrollbar(list_window)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+    # 创建列表框
+    listbox = Listbox(list_window, yscrollcommand=scrollbar.set, selectmode=EXTENDED)
+    for file in matched_files:
+        listbox.insert(tk.END, file)
+    listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+    scrollbar.config(command=listbox.yview)
+
+    # 添加打开选中文件按钮
+    def open_selected_files():
+        selected_indices = listbox.curselection()
+        for i in selected_indices:
+            file_name = listbox.get(i)
+            launch_file(os.path.join(local_dir, file_name))
+
+    open_button = tk.Button(list_window, text="打开文件", command=open_selected_files)
+    open_button.pack(pady=10)
+
+# 执行检查并显示结果
+def run_check():
+    url = api_url + api_download_button
+    local_dir = "XPMSL/module"  # 根据实际情况调整路径
+    remote_file_info = get_and_parse_file_list(url)
+    if remote_file_info:
+        matched_files = check_local_files_against_remote(remote_file_info, local_dir)
+        update_list_window(matched_files, local_dir)
+    else:
+        update_list_window(["No remote file info available."], local_dir)
+
 
 
 # 下载模块
@@ -243,7 +331,7 @@ def open_about_window():
 
     about_label = ttk.Label(
         about_window,
-        text="Xiaofeishu Python Minecraft Server Launcher(XPMSL) "+ version+ "\n作者: 没用的小废鼠\n\n程序免费开源,但是要遵守 GPL-3.0 license"+"\n内部版本: "+Build+"\n\n因为没有服务器API功能依赖 Cloudflare",
+        text="Xiaofeishu Python Minecraft Server Launcher(XPMSL) "+ version+ "\n作者: 没用的小废鼠\n\n程序免费开源,但是要遵守 GPL-3.0 license"+"\n内部版本: "+Build+about_build+"\n\n因为没有服务器API功能依赖 Cloudflare",
     )
     about_label.pack(padx=20, pady=20)
 
@@ -275,6 +363,7 @@ menu_bar.add_cascade(label="关于", command=open_about_window)
 menu_bar.add_cascade(label="设置内存", command=set_memory_settings)
 # 在菜单栏中添加一个选项来触发显示单独界面的函数
 menu_bar.add_cascade(label="打开下载模块", command=open_download_module_window)
+menu_bar.add_cascade(label="打开已有模块", command=run_check)
 menu_bar.add_command(label="查看Github最新版", command=check_for_updates)
 
 
