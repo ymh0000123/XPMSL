@@ -13,7 +13,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      const response = await fetch('https://xpmsl.pages.dev/announcement/list.txt');
+      const response = await fetch('../announcement/list.txt');
       const text = await response.text();
       this.items = text.split('\n').map(line => {
         const match = line.match(/\[(.*?)\]\((.*?)\)/);
@@ -31,9 +31,9 @@ export default {
   gap: 16px;
 }
 .card {
-  background-color: var(--info-border-color);
-  background: var(--info-bg-color);
-  border: 1px solid #4cb3d4;
+  background-color: var(--important-border-color);
+  background: var(--important-bg-color);
+  border: 1px solid var(--important-border-color);
   padding: 16px;
   width: 200px;
   border-radius: 8px; /* 添加圆角 */
@@ -45,7 +45,7 @@ export default {
 .box {
     display: inline-block;
     padding: 10px 20px; /* 设置内边距，以控制链接框大小 */
-    background-color: var(--info-border-color); /* 设置背景色 */
+    background-color: var(--important-border-color); /* 设置背景色 */
     border-radius: 10px; /* 设置圆角为 10px */
     color: white; /* 设置文本颜色为白色 */
     text-decoration: none; /* 移除下划线 */

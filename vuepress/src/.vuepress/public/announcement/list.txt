@@ -1,2 +1,3 @@
-[list.txt](https://github.moeyy.xyz/https://raw.githubusercontent.com/ymh0000123/XPMSL/main/announcement/list.txt)
-[README.md](https://github.moeyy.xyz/https://raw.githubusercontent.com/ymh0000123/XPMSL/main/README.md)
+[模块列表.txt](https://github.moeyy.xyz/https://raw.githubusercontent.com/ymh0000123/XPMSL/main/announcement/list.txt)
+[Github-XPMSL-module-frp-tools.exe](https://github.com/ymh0000123/XPMSL-module-frp-tools/releases/download/V1.0/XPMSL-module-frp-tools.exe)
+[镜像-XPMSL-module-frp-tools.exe](https://github.com/ymh0000123/XPMSL-module-frp-tools/releases/download/V1.0/XPMSL-module-frp-tools.exe)
