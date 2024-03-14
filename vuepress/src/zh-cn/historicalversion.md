@@ -1,5 +1,8 @@
 # 历史版本
 
+## 提醒
+[点击这里](github-auto) 可以查看Github更新
+
 ## 20240220  
  1. 添加启动模块  
 [Github](https://github.com/ymh0000123/XPMSL/releases/download/V1.1.2/XPMSL.exe) | 

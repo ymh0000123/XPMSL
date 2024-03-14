@@ -14,6 +14,6 @@ export default navbar([
   {
     text: "镜像站" ,
     icon: "fa-solid fa-rotate",
-    link: "https://ymh-dochub.pages.dev/"
+    link: "https://xpmsl.pages.dev/"
   }
 ]);
